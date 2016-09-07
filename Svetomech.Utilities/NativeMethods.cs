@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using static Svetomech.Utilities.SimplePlatform;
 
 namespace Svetomech.Utilities
 {
@@ -17,7 +18,7 @@ namespace Svetomech.Utilities
     public const int SW_HIDE = 0;
     public const int SW_SHOW = 5;
 
-    private static readonly bool runningWindows = (SimplePlatform.RunningPlatform() == SimplePlatform.Platform.Windows);
+    private static readonly bool runningWindows = (RunningPlatform() == Platform.Windows);
 
 
     private static class WindowsNative

@@ -1,11 +1,12 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using static Svetomech.Utilities.SimplePlatform;
 using static System.IO.Path;
 
 namespace Svetomech.Utilities
 {
-  public static class SimpleIO
+    public static class SimpleIO
   {
     public static class Path
     {
@@ -21,7 +22,7 @@ namespace Svetomech.Utilities
 
         char[] dirSeparators = { DirectorySeparatorChar, AltDirectorySeparatorChar };
 
-        return (SimplePlatform.RunningPlatform() == SimplePlatform.Platform.Windows) ?
+        return (RunningPlatform() == Platform.Windows) ?
           String.Equals(GetFullPath(pathA).TrimEnd(dirSeparators), GetFullPath(pathB).TrimEnd(dirSeparators), StringComparison.OrdinalIgnoreCase) :
           String.Equals(GetFullPath(pathA).TrimEnd(dirSeparators), GetFullPath(pathB).TrimEnd(dirSeparators));
       }

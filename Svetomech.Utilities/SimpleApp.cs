@@ -1,5 +1,7 @@
 using System.Runtime.InteropServices;
 using static Microsoft.Win32.Registry;
+using static Svetomech.Utilities.SimplePlatform;
+using static Svetomech.Utilities.SimpleIO;
 
 namespace Svetomech.Utilities
 {
@@ -20,7 +22,7 @@ namespace Svetomech.Utilities
         regPath = regKey.GetValue(appName)?.ToString();
       }
 
-      if (SimpleIO.Path.Equals(appPath, regPath))
+      if (Path.Equals(appPath, regPath))
       {
         return;
       }
@@ -48,10 +50,10 @@ namespace Svetomech.Utilities
         regPath = regKey.GetValue(appName)?.ToString();
       }
 
-      return SimpleIO.Path.Equals(appPath, regPath);
+      return Path.Equals(appPath, regPath);
     }
 
-    private static readonly bool runningWindows = (SimplePlatform.RunningPlatform() == SimplePlatform.Platform.Windows);
+    private static readonly bool runningWindows = (RunningPlatform() == Platform.Windows);
 
 
     private static class WindowsApp
