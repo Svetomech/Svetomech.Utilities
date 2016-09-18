@@ -7,7 +7,7 @@ namespace Svetomech.Utilities
 {
   public static partial class SimpleConsole
   {
-    public enum ConsoleTypes
+    public enum ConsoleType
     {
       CMD,
       Powershell,
@@ -15,24 +15,24 @@ namespace Svetomech.Utilities
       None
     }
 
-    public static string ExecuteCommand(string command, ConsoleTypes console)
+    public static string ExecuteCommand(string command, ConsoleType console)
     {
       ProcessStartInfo procStartInfo = null;
       switch (console)
       {
-        case ConsoleTypes.CMD:
+        case ConsoleType.CMD:
           procStartInfo = new ProcessStartInfo("cmd", "/c " + command);
           break;
 
-        case ConsoleTypes.Powershell:
+        case ConsoleType.Powershell:
           procStartInfo = new ProcessStartInfo("powershell", "-command " + command);
           break;
 
-        case ConsoleTypes.Bash:
+        case ConsoleType.Bash:
           procStartInfo = new ProcessStartInfo("/bin/bash", "-c " + command);
           break;
 
-        case ConsoleTypes.None:
+        case ConsoleType.None:
           return null;
 
         default:
