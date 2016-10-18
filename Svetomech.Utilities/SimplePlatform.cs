@@ -3,25 +3,25 @@ using static System.PlatformID;
 
 namespace Svetomech.Utilities
 {
-  public static class SimplePlatform
-  {
-    public enum Platform
+    public static class SimplePlatform
     {
-      Windows,
-      Unix
-    }
+        public enum Platform
+        {
+            Windows,
+            Unix
+        }
 
-    public static Platform RunningPlatform()
-    {
-      switch (OSVersion.Platform)
-      {
-        case Unix:
-        case MacOSX:
-          return Platform.Unix;
+        public static Platform RunningPlatform()
+        {
+            switch (OSVersion.Platform)
+            {
+                case Unix:
+                case MacOSX:
+                    return Platform.Unix;
 
-        default:
-          return Platform.Windows;
-      }
+                default:
+                    return Platform.Windows;
+            }
+        }
     }
-  }
 }
