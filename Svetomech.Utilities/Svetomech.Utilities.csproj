@@ -51,6 +51,8 @@
     <Compile Include="SimpleIO.cs" />
     <Compile Include="SimplePlatform.cs" />
     <Compile Include="SimpleString.cs" />
+    <Compile Include="SimpleProcess.cs" />
+    <Compile Include="Window.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
