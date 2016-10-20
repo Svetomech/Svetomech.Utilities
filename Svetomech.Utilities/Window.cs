@@ -57,7 +57,7 @@ namespace Svetomech.Utilities
         // TODO: Find the actual Linux APIs equivalent to Windows ones
         private class LinuxWindow
         {
-            internal static bool IsShown(Window window) => false;
+            internal static bool IsShown(Window window) => true;
 
             internal static bool Hide(Window window) => false;
 
