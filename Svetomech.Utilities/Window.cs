@@ -20,7 +20,7 @@ namespace Svetomech.Utilities
             return Handle.ToString();
         }
 
-        public bool IsShown() => runningWindows ? WindowsWindow.IsShown(this) : LinuxWindow.IsShown(this);
+        public bool IsShown => runningWindows ? WindowsWindow.IsShown(this) : LinuxWindow.IsShown(this);
 
         public bool Hide() => runningWindows ? WindowsWindow.Hide(this) : LinuxWindow.Hide(this);
 
