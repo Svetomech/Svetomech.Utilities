@@ -6,9 +6,9 @@ namespace Svetomech.Utilities
 {
     public static class NativeMethods
     {
-        public static IntPtr GetConsoleWindow()
+        public static Window GetConsoleWindow()
         {
-            return runningWindows ? WindowsNative.GetConsoleWindow() : LinuxNative.GetConsoleWindow();
+            return runningWindows ? new Window(WindowsNative.GetConsoleWindow()) : new Window(LinuxNative.GetConsoleWindow());
         }
 
         private static readonly bool runningWindows = (RunningPlatform() == Platform.Windows);
