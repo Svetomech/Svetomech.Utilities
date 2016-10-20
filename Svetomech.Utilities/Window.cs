@@ -15,6 +15,11 @@ namespace Svetomech.Utilities
             Handle = handle;
         }
 
+        public override string ToString()
+        {
+            return Handle.ToString();
+        }
+
         public bool Hide() => runningWindows ? WindowsWindow.Hide(this) : LinuxWindow.Hide(this);
 
         public bool Show() => runningWindows ? WindowsWindow.Show(this) : LinuxWindow.Show(this);
