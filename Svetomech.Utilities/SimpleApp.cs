@@ -122,9 +122,9 @@ namespace Svetomech.Utilities
                 string autorunFileLine = null;
                 try
                 {
-                    using (var streamReader = new StreamReader(autorunFilePath))
+                    using (var reader = new StreamReader(autorunFilePath))
                     {
-                        while (!(autorunFileLine = streamReader.ReadLine()).StartsWith("Exec")) ;
+                        while (!(autorunFileLine = reader.ReadLine()).StartsWith("Exec")) ;
                     }
                 }
                 catch { }
