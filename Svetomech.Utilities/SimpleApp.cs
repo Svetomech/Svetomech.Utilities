@@ -112,12 +112,17 @@ namespace Svetomech.Utilities
             [DllImport("libc")]
             private static extern uint getuid();
 
+            private static string autorunFolderName;
+            private static string autorunFolderPath;
             private static string autorunFilePath;
             private static string readAutorunAppPath(string appName)
             {
-                autorunFilePath = autorunFilePath ?? Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "autostart",
-                    $"{appName.ToLower()}-autostart.desktop");
+                autorunFolderName = autorunFolderName ?? "autostart";
+                autorunFolderPath = autorunFolderPath ?? Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), autorunFolderName);
+
+                autorunFilePath = Path.Combine(autorunFolderPath,
+                    $"{appName.ToLower()}-{autorunFolderName}.desktop");
 
                 string autorunFileLine = null;
                 try
