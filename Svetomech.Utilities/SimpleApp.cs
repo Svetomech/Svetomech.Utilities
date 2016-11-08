@@ -10,8 +10,7 @@ namespace Svetomech.Utilities
         public static bool IsElevated() => runningWindows ? WindowsApp.IsElevated() : LinuxApp.IsElevated();
 
         public static bool VerifyAutorun(string appName, string appPath) => runningWindows ?
-            WindowsApp.VerifyAutorun(appName, appPath)
-            : LinuxApp.VerifyAutorun(appName, appPath);
+            WindowsApp.VerifyAutorun(appName, appPath) : LinuxApp.VerifyAutorun(appName, appPath);
 
         public static void SwitchAutorun(string appName, string appPath = null)
         {
@@ -77,9 +76,17 @@ namespace Svetomech.Utilities
         {
             internal static bool IsElevated() => (getuid() == 0);
 
-            internal static bool VerifyAutorun(string appName, string appPath) => false;
+            internal static bool VerifyAutorun(string appName, string appPath)
+            {
+                //.config/autostart/simplemaid-autostart.desktop
+            }
 
-            internal static void SwitchAutorun(string appName, string appPath = null) { }
+            internal static void SwitchAutorun(string appName, string appPath = null)
+            {
+                string autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
+                    $"Comment={appName} Startup", $"Exec=mono {appPath}", "NoDisplay=true", 
+                    "X-GNOME-Autostart-enabled=true", "Terminal=true" };
+            }
 
             [DllImport("libc")]
             private static extern uint getuid();
