@@ -74,6 +74,19 @@ namespace Svetomech.Utilities
 
         public static class File
         {
+            public static bool FitsMask(FileInfo file, string fileMask)
+            {
+                string pattern = '^' + Regex.Escape(fileMask.Replace(".", "__DOT__").Replace("*", "__STAR__").Replace("?", "__QM__"))
+                  .Replace("__DOT__", "[.]").Replace("__STAR__", ".*").Replace("__QM__", ".") + '$';
+
+                return new Regex(pattern, RegexOptions.IgnoreCase).IsMatch(file.Name);
+            }
+
+            public static bool FitsMask(string fileName, string fileMask)
+            {
+                return FitsMask(new FileInfo(fileName), fileMask);
+            }
+
             public static bool IsLocked(FileInfo file)
             {
                 FileStream stream = null;
@@ -100,18 +113,37 @@ namespace Svetomech.Utilities
                 return IsLocked(new FileInfo(filePath));
             }
 
-            public static bool FitsMask(FileInfo file, string fileMask)
+            public static void Lock(FileInfo file)
             {
-                string pattern = '^' + Regex.Escape(fileMask.Replace(".", "__DOT__").Replace("*", "__STAR__").Replace("?", "__QM__"))
-                  .Replace("__DOT__", "[.]").Replace("__STAR__", ".*").Replace("__QM__", ".") + '$';
+                if (IsLocked(file))
+                {
+                    return;
+                }
 
-                return new Regex(pattern, RegexOptions.IgnoreCase).IsMatch(file.Name);
+                fileLocker = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
             }
 
-            public static bool FitsMask(string fileName, string fileMask)
+            public static void Lock(string filePath)
             {
-                return FitsMask(new FileInfo(fileName), fileMask);
+                Lock(new FileInfo(filePath));
             }
+
+            public static void Unlock(FileInfo file)
+            {
+                if (!IsLocked(file))
+                {
+                    return;
+                }
+
+                fileLocker?.Close();
+            }
+
+            public static void Unlock(string filePath)
+            {
+                Unlock(new FileInfo(filePath));
+            }
+
+            private static FileStream fileLocker = null;
         }
 
 
@@ -167,6 +199,14 @@ namespace Svetomech.Utilities
             Directory.Copy(dir, new DirectoryInfo(destDirPath), copyRootFiles);
         }
 
+        public static bool FitsMask(this FileInfo file, string fileMask)
+        {
+            if (null == file)
+                throw new ArgumentNullException(nameof(file));
+
+            return File.FitsMask(file, fileMask);
+        }
+
         public static bool IsLocked(this FileInfo file)
         {
             if (null == file)
@@ -175,12 +215,20 @@ namespace Svetomech.Utilities
             return File.IsLocked(file);
         }
 
-        public static bool FitsMask(this FileInfo file, string fileMask)
+        public static void Lock(this FileInfo file)
         {
             if (null == file)
                 throw new ArgumentNullException(nameof(file));
 
-            return File.FitsMask(file, fileMask);
+            File.Lock(file);
+        }
+
+        public static void Unlock(this FileInfo file)
+        {
+            if (null == file)
+                throw new ArgumentNullException(nameof(file));
+
+            File.Unlock(file);
         }
     }
 }
