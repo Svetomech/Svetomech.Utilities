@@ -1,7 +1,8 @@
+using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using static Microsoft.Win32.Registry;
 using static Svetomech.Utilities.SimplePlatform;
-using static Svetomech.Utilities.SimpleIO;
 
 namespace Svetomech.Utilities
 {
@@ -34,26 +35,16 @@ namespace Svetomech.Utilities
 
             internal static bool VerifyAutorun(string appName, string appPath)
             {
-                string regPath = null;
+                string regAppPath = readAutorunRegPath(appName);
 
-                using (var regKey = CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false))
-                {
-                    regPath = regKey.GetValue(appName)?.ToString();
-                }
-
-                return Path.Equals(appPath, regPath);
+                return SimpleIO.Path.Equals(appPath, regAppPath);
             }
 
             internal static void SwitchAutorun(string appName, string appPath = null)
             {
-                string regPath = null;
+                string regAppPath = readAutorunRegPath(appName);
 
-                using (var regKey = CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false))
-                {
-                    regPath = regKey.GetValue(appName)?.ToString();
-                }
-
-                if (Path.Equals(appPath, regPath))
+                if (SimpleIO.Path.Equals(appPath, regAppPath))
                 {
                     return;
                 }
@@ -70,6 +61,18 @@ namespace Svetomech.Utilities
                     }
                 }
             }
+
+            private static string readAutorunRegPath(string appName)
+            {
+                string regAppPath = null;
+
+                using (var regKey = CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false))
+                {
+                    regAppPath = regKey?.GetValue(appName)?.ToString();
+                }
+
+                return regAppPath;
+            }
         }
 
         private static class LinuxApp
@@ -78,18 +81,64 @@ namespace Svetomech.Utilities
 
             internal static bool VerifyAutorun(string appName, string appPath)
             {
-                //.config/autostart/simplemaid-autostart.desktop
+                string autorunAppPath = readAutorunAppPath(appName);
+
+                return SimpleIO.Path.Equals(appPath, autorunAppPath);
             }
 
             internal static void SwitchAutorun(string appName, string appPath = null)
             {
-                string autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
-                    $"Comment={appName} Startup", $"Exec=mono {appPath}", "NoDisplay=true", 
-                    "X-GNOME-Autostart-enabled=true", "Terminal=true" };
+                string autorunAppPath = readAutorunAppPath(appName);
+
+                if (SimpleIO.Path.Equals(appPath, autorunAppPath))
+                {
+                    return;
+                }
+
+                if (appPath != null)
+                {
+                    string[] autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
+                                                 $"Comment={appName} Startup", "X-GNOME-Autostart-enabled=true",
+                                                 $"Exec={appPath}", "NoDisplay=true", "Terminal=false" };
+
+                    File.WriteAllLines(autorunFilePath, autorunFileLines);
+                }
+                else
+                {
+                    File.Delete(autorunFilePath);
+                }
             }
 
             [DllImport("libc")]
             private static extern uint getuid();
+
+            private static string autorunFilePath;
+            private static string readAutorunAppPath(string appName)
+            {
+                autorunFilePath = autorunFilePath ?? Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "autostart",
+                    $"{appName.ToLower()}-autostart.desktop");
+
+                string autorunFileLine = null;
+                try
+                {
+                    using (var streamReader = new StreamReader(autorunFilePath))
+                    {
+                        while (!(autorunFileLine = streamReader.ReadLine()).StartsWith("Exec")) ;
+                    }
+                }
+                catch { }
+
+                string autorunAppPath = null;
+                if (autorunFileLine != null)
+                {
+                    autorunAppPath = (autorunFileLine.Contains("\""))
+                        ? autorunFileLine.Substring(autorunFileLine.IndexOf('\"') + 1).TrimEnd('\"')
+                        : autorunFileLine.Substring(autorunFileLine.IndexOf('=') + 1);
+                }
+
+                return autorunAppPath;
+            }
         }
     }
 }
