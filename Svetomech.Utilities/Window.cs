@@ -6,16 +6,6 @@ namespace Svetomech.Utilities
 {
     public class Window
     {
-        public static void PopulateFromHandles(string[] handles, out Window[] windows)
-        {
-            windows = new Window[handles.Length];
-
-            for (int i = 0; i < windows.Length; ++i)
-            {
-                windows[i] = new Window(new IntPtr(Convert.ToInt32(handles[i])));
-            }
-        }
-
         public IntPtr Handle { get; set; } = IntPtr.Zero;
 
         public Window() { }
