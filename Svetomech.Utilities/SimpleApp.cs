@@ -112,17 +112,14 @@ namespace Svetomech.Utilities
             [DllImport("libc")]
             private static extern uint getuid();
 
-            private static string autorunFolderName;
-            private static string autorunFolderPath;
             private static string autorunFilePath;
             private static string readAutorunAppPath(string appName)
             {
-                autorunFolderName = autorunFolderName ?? "autostart";
-                autorunFolderPath = autorunFolderPath ?? Path.Combine(
+                string autorunFolderName = "autostart";
+                string autorunFolderPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), autorunFolderName);
 
-                autorunFilePath = Path.Combine(autorunFolderPath,
-                    $"{appName.ToLower()}-{autorunFolderName}.desktop");
+                autorunFilePath = Path.Combine(autorunFolderPath, $"{appName.ToLower()}-{autorunFolderName}.desktop");
 
                 string autorunFileLine = null;
                 try
@@ -134,13 +131,27 @@ namespace Svetomech.Utilities
                 }
                 catch { }
 
-                string autorunAppPath = null;
-                if (autorunFileLine != null)
+                if (String.IsNullOrWhiteSpace(autorunFileLine))
                 {
-                    autorunAppPath = (autorunFileLine.Contains("\""))
-                        ? autorunFileLine.Substring(autorunFileLine.IndexOf('\"') + 1).TrimEnd('\"')
-                        : autorunFileLine.Substring(autorunFileLine.IndexOf('=') + 1);
+                    return null;
                 }
+
+                //char quo = '"'; char sep = '/'; char equ = '=';
+
+                string autorunAppPath = null;
+
+                /*if (autorunFileLine.Contains(quo))
+                {
+                    autorunAppPath = autorunFileLine.Substring(autorunFileLine.IndexOf(quo) + 1).TrimEnd(quo);
+                }*/
+                if (autorunFileLine.Contains(Path.DirectorySeparatorChar))
+                {
+                    autorunAppPath = autorunFileLine.Substring(autorunFileLine.IndexOf(Path.DirectorySeparatorChar));
+                }
+                /*else if (autorunFileLine.Contains(equ))
+                {
+                    autorunAppPath = autorunFileLine.Substring(autorunFileLine.IndexOf(equ) + 1);
+                }*/
 
                 return autorunAppPath;
             }
