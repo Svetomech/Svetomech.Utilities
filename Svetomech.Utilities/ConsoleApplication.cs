@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Svetomech.Utilities
 {
-    public static class Application
+    public static class ConsoleApplication
     {
         private static readonly Assembly assembly = Assembly.GetEntryAssembly();
         private static readonly FileVersionInfo assemblyInfo = FileVersionInfo.GetVersionInfo(assembly.Location);

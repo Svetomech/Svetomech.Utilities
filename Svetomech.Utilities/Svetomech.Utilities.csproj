@@ -33,7 +33,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
+    <Compile Include="ConsoleApplication.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="PasswordStrength.cs" />
     <Compile Include="Point.cs" />
