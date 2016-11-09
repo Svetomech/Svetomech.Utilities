@@ -138,7 +138,7 @@ namespace Svetomech.Utilities
 
                 int index = autorunFileLine.IndexOf(Path.DirectorySeparatorChar);
 
-                return (index != -1) ? autorunFileLine.Substring(index) : null;
+                return (index != -1) ? autorunFileLine.Substring(index).TrimEnd('"') : null;
             }
         }
     }
