@@ -99,7 +99,7 @@ namespace Svetomech.Utilities
                 {
                     string[] autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
                                                  $"Comment={appName} Startup", "X-GNOME-Autostart-enabled=true",
-                                                 $"Exec={appPath}", "NoDisplay=true", "Terminal=false" };
+                                                 $"Exec={appPath}", "NoDisplay=true", "Terminal=true" };
 
                     File.WriteAllLines(autorunFilePath, autorunFileLines);
                 }
