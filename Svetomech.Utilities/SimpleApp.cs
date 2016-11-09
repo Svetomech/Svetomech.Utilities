@@ -13,12 +13,12 @@ namespace Svetomech.Utilities
         public static bool VerifyAutorun(string appName, string appPath) => runningWindows ?
             WindowsApp.VerifyAutorun(appName, appPath) : LinuxApp.VerifyAutorun(appName, appPath);
 
-        public static void SwitchAutorun(string appName, string appPath = null)
+        public static void SwitchAutorun(string appName, string appPath = null, bool useTerminal = false)
         {
             if (runningWindows)
                 WindowsApp.SwitchAutorun(appName, appPath);
             else
-                LinuxApp.SwitchAutorun(appName, appPath);
+                LinuxApp.SwitchAutorun(appName, appPath, useTerminal);
         }
 
         private static readonly bool runningWindows = (RunningPlatform() == Platform.Windows);
@@ -86,7 +86,7 @@ namespace Svetomech.Utilities
                 return SimpleIO.Path.Equals(appPath, autorunAppPath);
             }
 
-            internal static void SwitchAutorun(string appName, string appPath = null)
+            internal static void SwitchAutorun(string appName, string appPath = null, bool useTerminal = false)
             {
                 string autorunAppPath = readAutorunAppPath(appName);
 
@@ -99,7 +99,7 @@ namespace Svetomech.Utilities
                 {
                     string[] autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
                                                  $"Comment={appName} Startup", "X-GNOME-Autostart-enabled=true",
-                                                 $"Exec={appPath}", "NoDisplay=true", "Terminal=true" };
+                                                 $"Exec={appPath}", "NoDisplay=true", $"Terminal={useTerminal}" };
 
                     File.WriteAllLines(autorunFilePath, autorunFileLines);
                 }
