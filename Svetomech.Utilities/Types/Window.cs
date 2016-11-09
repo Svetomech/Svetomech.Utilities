@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using static Svetomech.Utilities.SimplePlatform;
 
-namespace Svetomech.Utilities
+namespace Svetomech.Utilities.Types
 {
     public class Window
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Svetomech.Utilities.Types;
+using System;
 
 namespace Svetomech.Utilities
 {

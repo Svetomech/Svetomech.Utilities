@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Svetomech.Utilities.Types;
+using System.Diagnostics;
 using System.IO;
 
 namespace Svetomech.Utilities

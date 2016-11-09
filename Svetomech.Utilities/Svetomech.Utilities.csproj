@@ -36,7 +36,7 @@
     <Compile Include="ConsoleApplication.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="PasswordStrength.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Types\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleApp.cs" />
     <Compile Include="SimpleConsole.cs" />
@@ -45,7 +45,7 @@
     <Compile Include="SimplePlatform.cs" />
     <Compile Include="SimpleString.cs" />
     <Compile Include="SimpleProcess.cs" />
-    <Compile Include="Window.cs" />
+    <Compile Include="Types\Window.cs" />
     <Compile Include="WindowFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

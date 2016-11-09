@@ -1,3 +1,4 @@
+using Svetomech.Utilities.Types;
 using System;
 using System.Runtime.InteropServices;
 using static Svetomech.Utilities.SimplePlatform;
