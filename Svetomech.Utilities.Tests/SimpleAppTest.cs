@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.IO;
-using static Svetomech.Utilities.SimpleApp;
+using static Svetomech.Utilities.App;
 
 namespace Svetomech.Utilities.Tests
 {

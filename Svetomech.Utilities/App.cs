@@ -6,7 +6,7 @@ using static Svetomech.Utilities.SimplePlatform;
 
 namespace Svetomech.Utilities
 {
-    public static class SimpleApp
+    public static class App
     {
         public static bool IsElevated() => runningWindows ? WindowsApp.IsElevated() : LinuxApp.IsElevated();
 
