@@ -28,9 +28,9 @@ namespace Svetomech.Utilities.Tests
         }
 
         [Test, Order(2)]
-        public void SwitchAutorun_OtherApp_Add()
+        public void SwitchAutorun_SomeApp_Add()
         {
-            string appName = "OtherApp";
+            string appName = "SomeApp";
             string appPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 appName, $"{appName}.exe");
@@ -46,9 +46,9 @@ namespace Svetomech.Utilities.Tests
         }
 
         [Test, Order(3)]
-        public void VerifyAutorun_OtherApp_True()
+        public void VerifyAutorun_SomeApp_True()
         {
-            string appName = "OtherApp";
+            string appName = "SomeApp";
             string appPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 appName, $"{appName}.exe");
@@ -59,9 +59,9 @@ namespace Svetomech.Utilities.Tests
         }
 
         [Test, Order(4)]
-        public void SwitchAutorun_OtherApp_Remove()
+        public void SwitchAutorun_SomeApp_Remove()
         {
-            string appName = "OtherApp";
+            string appName = "SomeApp";
 
             try
             {
