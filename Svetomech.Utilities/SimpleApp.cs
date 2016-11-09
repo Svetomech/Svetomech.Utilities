@@ -136,24 +136,9 @@ namespace Svetomech.Utilities
                     return null;
                 }
 
-                //char quo = '"'; char sep = '/'; char equ = '=';
+                int index = autorunFileLine.IndexOf(Path.DirectorySeparatorChar);
 
-                string autorunAppPath = null;
-
-                /*if (autorunFileLine.Contains(quo))
-                {
-                    autorunAppPath = autorunFileLine.Substring(autorunFileLine.IndexOf(quo) + 1).TrimEnd(quo);
-                }*/
-                if (autorunFileLine.Contains(Path.DirectorySeparatorChar))
-                {
-                    autorunAppPath = autorunFileLine.Substring(autorunFileLine.IndexOf(Path.DirectorySeparatorChar));
-                }
-                /*else if (autorunFileLine.Contains(equ))
-                {
-                    autorunAppPath = autorunFileLine.Substring(autorunFileLine.IndexOf(equ) + 1);
-                }*/
-
-                return autorunAppPath;
+                return (index != -1) ? autorunFileLine.Substring(index) : null;
             }
         }
     }
