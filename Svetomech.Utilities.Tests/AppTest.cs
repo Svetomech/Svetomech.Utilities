@@ -41,25 +41,25 @@ namespace Svetomech.Utilities.Tests
         [Test, Order(5)]
         public void VerifyAutorun_OtherApp_False()
         {
-            VerifyAutorun_False("OtherApp");
+            VerifyAutorun_False("Other App");
         }
 
         [Test, Order(6)]
         public void SwitchAutorun_OtherApp_Add()
         {
-            SwitchAutorun_Add("OtherApp", true);
+            SwitchAutorun_Add("Other App", true);
         }
 
         [Test, Order(7)]
         public void VerifyAutorun_OtherApp_True()
         {
-            VerifyAutorun_True("OtherApp");
+            VerifyAutorun_True("Other App");
         }
 
         [Test, Order(8)]
         public void SwitchAutorun_OtherApp_Remove()
         {
-            SwitchAutorun_Remove("OtherApp");
+            SwitchAutorun_Remove("Other App");
         }
 
         public void VerifyAutorun_False(string appName)

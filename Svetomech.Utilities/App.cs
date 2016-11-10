@@ -55,7 +55,7 @@ namespace Svetomech.Utilities
                     {
                         appPath = SimpleIO.Path.AddQuotesIfNeeded(appPath);
 
-                        regKey.SetValue(appName, isConsoleApp ? $"cmd {appPath}" : appPath);
+                        regKey.SetValue(appName, isConsoleApp ? $"cmd /k {appPath}" : appPath);
                     }
                     else
                     {
