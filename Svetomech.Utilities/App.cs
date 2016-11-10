@@ -13,12 +13,12 @@ namespace Svetomech.Utilities
         public static bool VerifyAutorun(string appName, string appPath) => runningWindows ?
             WindowsApp.VerifyAutorun(appName, appPath) : LinuxApp.VerifyAutorun(appName, appPath);
 
-        public static void SwitchAutorun(string appName, string appPath = null, bool useTerminal = false)
+        public static void SwitchAutorun(string appName, string appPath = null, bool isConsoleApp = false)
         {
             if (runningWindows)
-                WindowsApp.SwitchAutorun(appName, appPath);
+                WindowsApp.SwitchAutorun(appName, appPath, isConsoleApp);
             else
-                LinuxApp.SwitchAutorun(appName, appPath, useTerminal);
+                LinuxApp.SwitchAutorun(appName, appPath, isConsoleApp);
         }
 
         private static readonly bool runningWindows = (RunningPlatform() == Platform.Windows);
@@ -35,16 +35,16 @@ namespace Svetomech.Utilities
 
             internal static bool VerifyAutorun(string appName, string appPath)
             {
-                string regAppPath = readAutorunRegPath(appName);
+                string autorunAppPath = readAutorunAppPath(appName);
 
-                return SimpleIO.Path.Equals(appPath, regAppPath);
+                return SimpleIO.Path.Equals(appPath, autorunAppPath);
             }
 
-            internal static void SwitchAutorun(string appName, string appPath = null)
+            internal static void SwitchAutorun(string appName, string appPath = null, bool isConsoleApp = false)
             {
-                string regAppPath = readAutorunRegPath(appName);
+                string autorunAppPath = readAutorunAppPath(appName);
 
-                if (SimpleIO.Path.Equals(appPath, regAppPath))
+                if (SimpleIO.Path.Equals(appPath, autorunAppPath))
                 {
                     return;
                 }
@@ -53,7 +53,9 @@ namespace Svetomech.Utilities
                 {
                     if (appPath != null)
                     {
-                        regKey.SetValue(appName, appPath);
+                        appPath = SimpleIO.Path.AddQuotesIfNeeded(appPath);
+
+                        regKey.SetValue(appName, isConsoleApp ? $"cmd {appPath}" : appPath);
                     }
                     else
                     {
@@ -62,16 +64,27 @@ namespace Svetomech.Utilities
                 }
             }
 
-            private static string readAutorunRegPath(string appName)
+            private static string readAutorunAppPath(string appName)
             {
-                string regAppPath = null;
-
-                using (var regKey = CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false))
+                string autorunRegValue = null;
+                try
                 {
-                    regAppPath = regKey?.GetValue(appName)?.ToString();
+                    using (var regKey = CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", false))
+                    {
+                        autorunRegValue = regKey?.GetValue(appName)?.ToString();
+                    }
+                }
+                catch { }
+
+                if (String.IsNullOrWhiteSpace(autorunRegValue))
+                {
+                    return null;
                 }
 
-                return regAppPath;
+                int index = autorunRegValue.IndexOf(':') - 1;
+                index = index ?? autorunRegValue.IndexOf(Path.DirectorySeparatorChar);
+
+                return (index != -1) ? autorunRegValue.Substring(index).TrimEnd('"') : null;
             }
         }
 
@@ -86,7 +99,7 @@ namespace Svetomech.Utilities
                 return SimpleIO.Path.Equals(appPath, autorunAppPath);
             }
 
-            internal static void SwitchAutorun(string appName, string appPath = null, bool useTerminal = false)
+            internal static void SwitchAutorun(string appName, string appPath = null, bool isConsoleApp = false)
             {
                 string autorunAppPath = readAutorunAppPath(appName);
 
@@ -99,7 +112,7 @@ namespace Svetomech.Utilities
                 {
                     string[] autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
                                                  $"Comment={appName} Startup", "X-GNOME-Autostart-enabled=true",
-                                                 $"Exec={appPath}", "NoDisplay=true", $"Terminal={useTerminal}" };
+                                                 $"Exec={appPath}", "NoDisplay=true", $"Terminal={isConsoleApp}" };
 
                     File.WriteAllLines(autorunFilePath, autorunFileLines);
                 }
@@ -136,7 +149,8 @@ namespace Svetomech.Utilities
                     return null;
                 }
 
-                int index = autorunFileLine.IndexOf(Path.DirectorySeparatorChar);
+                int index = autorunFileLine.IndexOf('~');
+                index = index ?? autorunFileLine.IndexOf(Path.DirectorySeparatorChar);
 
                 return (index != -1) ? autorunFileLine.Substring(index).TrimEnd('"') : null;
             }

@@ -26,6 +26,8 @@ namespace Svetomech.Utilities
                   String.Equals(GetFullPath(pathA).TrimEnd(dirSeparators), GetFullPath(pathB).TrimEnd(dirSeparators), StringComparison.OrdinalIgnoreCase) :
                   String.Equals(GetFullPath(pathA).TrimEnd(dirSeparators), GetFullPath(pathB).TrimEnd(dirSeparators));
             }
+
+            public static string AddQuotesIfNeeded(string path) => path.Contains(' ') ? $"\"{path}\"" : path;
         }
 
         public static class Directory
