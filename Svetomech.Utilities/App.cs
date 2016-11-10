@@ -82,7 +82,7 @@ namespace Svetomech.Utilities
                 }
 
                 int index = autorunRegValue.IndexOf(':') - 1;
-                index = index ?? autorunRegValue.IndexOf(Path.DirectorySeparatorChar);
+                index = (index < 0) ? autorunRegValue.IndexOf(Path.DirectorySeparatorChar) : index;
 
                 return (index != -1) ? autorunRegValue.Substring(index).TrimEnd('"') : null;
             }
@@ -150,7 +150,7 @@ namespace Svetomech.Utilities
                 }
 
                 int index = autorunFileLine.IndexOf('~');
-                index = index ?? autorunFileLine.IndexOf(Path.DirectorySeparatorChar);
+                index = (index < 0) ? autorunFileLine.IndexOf(Path.DirectorySeparatorChar) : index;
 
                 return (index != -1) ? autorunFileLine.Substring(index).TrimEnd('"') : null;
             }
