@@ -121,6 +121,7 @@ namespace Svetomech.Utilities
                 }
 
                 fileLocker = file.Open(FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                fileLocker.Lock(0, 0);
             }
 
             public static void Lock(string filePath)
@@ -135,6 +136,7 @@ namespace Svetomech.Utilities
                     return;
                 }
 
+                fileLocker?.Unlock(0, 0);
                 fileLocker?.Close();
             }
 
