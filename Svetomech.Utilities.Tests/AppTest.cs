@@ -17,27 +17,71 @@ namespace Svetomech.Utilities.Tests
         [Test, Order(1)]
         public void VerifyAutorun_SomeApp_False()
         {
-            string appName = "SomeApp";
+            VerifyAutorun_False("SomeApp");
+        }
+
+        [Test, Order(2)]
+        public void SwitchAutorun_SomeApp_Add()
+        {
+            SwitchAutorun_Add("SomeApp");
+        }
+
+        [Test, Order(3)]
+        public void VerifyAutorun_SomeApp_True()
+        {
+            VerifyAutorun_True("SomeApp");
+        }
+
+        [Test, Order(4)]
+        public void SwitchAutorun_SomeApp_Remove()
+        {
+            SwitchAutorun_Remove("SomeApp");
+        }
+
+        [Test, Order(5)]
+        public void VerifyAutorun_OtherApp_False()
+        {
+            VerifyAutorun_False("OtherApp");
+        }
+
+        [Test, Order(6)]
+        public void SwitchAutorun_OtherApp_Add()
+        {
+            SwitchAutorun_Add("OtherApp", true);
+        }
+
+        [Test, Order(7)]
+        public void VerifyAutorun_OtherApp_True()
+        {
+            VerifyAutorun_True("OtherApp");
+        }
+
+        [Test, Order(8)]
+        public void SwitchAutorun_OtherApp_Remove()
+        {
+            SwitchAutorun_Remove("OtherApp");
+        }
+
+        public void VerifyAutorun_False(string appName)
+        {
             string appPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 appName, $"{appName}.exe");
 
             bool isAppAutorun = VerifyAutorun(appName, appPath);
 
-            Assert.IsFalse(isAppAutorun);
+            Assert.False(isAppAutorun);
         }
 
-        [Test, Order(2)]
-        public void SwitchAutorun_SomeApp_Add()
+        public void SwitchAutorun_Add(string appName, bool isConsoleApp = false)
         {
-            string appName = "SomeApp";
             string appPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 appName, $"{appName}.exe");
 
             try
             {
-                SwitchAutorun(appName, appPath);
+                SwitchAutorun(appName, appPath, isConsoleApp);
             }
             catch
             {
@@ -45,24 +89,19 @@ namespace Svetomech.Utilities.Tests
             }
         }
 
-        [Test, Order(3)]
-        public void VerifyAutorun_SomeApp_True()
+        public void VerifyAutorun_True(string appName)
         {
-            string appName = "SomeApp";
             string appPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 appName, $"{appName}.exe");
 
             bool isAppAutorun = VerifyAutorun(appName, appPath);
 
-            Assert.IsTrue(isAppAutorun);
+            Assert.True(isAppAutorun);
         }
 
-        [Test, Order(4)]
-        public void SwitchAutorun_SomeApp_Remove()
+        public void SwitchAutorun_Remove(string appName)
         {
-            string appName = "SomeApp";
-
             try
             {
                 SwitchAutorun(appName);
