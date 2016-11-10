@@ -110,9 +110,11 @@ namespace Svetomech.Utilities
 
                 if (appPath != null)
                 {
+                    string ica = isConsoleApp.ToString().ToLower();
+                    
                     string[] autorunFileLines = { "[Desktop Entry]", "Type=Application", $"Name={appName}",
                                                  $"Comment={appName} Startup", "X-GNOME-Autostart-enabled=true",
-                                                 $"Exec={appPath}", "NoDisplay=true", $"Terminal={isConsoleApp}" };
+                                                 $"Exec={appPath}", "NoDisplay=true", $"Terminal={ica}" };
 
                     File.WriteAllLines(autorunFilePath, autorunFileLines);
                 }
