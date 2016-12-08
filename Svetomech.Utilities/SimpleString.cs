@@ -13,9 +13,9 @@ namespace Svetomech.Utilities
             return Uri.UnescapeDataString(url.Substring(url.LastIndexOf('/') + 1));
         }
 
-        public static string DecodeNonAsciiCharacters(string value)
+        public static string DecodeNonAsciiCharacters(this string str)
         {
-            return Regex.Replace(value, @"\\u(?<Value>[a-zA-Z0-9]{4})", m =>
+            return Regex.Replace(str, @"\\u(?<Value>[a-zA-Z0-9]{4})", m =>
                     ((char)int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString());
         }
 
