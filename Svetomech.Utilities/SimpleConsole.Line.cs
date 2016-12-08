@@ -22,7 +22,7 @@ namespace Svetomech.Utilities
             {
                 int currentLineCursor = CursorTop;
                 SetCursorPosition(0, CursorTop);
-                Write(new string(' ', WindowWidth));
+                Write(GetFilled(' '));
                 SetCursorPosition(0, currentLineCursor);
             }
         }
