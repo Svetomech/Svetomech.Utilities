@@ -182,7 +182,7 @@ namespace Svetomech.Utilities
 
             password = useSecureHolder ? (T)(object)passHolder : (T)(object)insecurePassHolder.ToString();
 
-            passHolder.Dispose();
+            passHolder?.Dispose();
         }
     }
 }
