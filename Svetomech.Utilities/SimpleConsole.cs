@@ -2,6 +2,7 @@ using Svetomech.Utilities.Types;
 using System;
 using System.Diagnostics;
 using System.Security;
+using System.Text;
 using static System.Console;
 
 namespace Svetomech.Utilities
@@ -91,16 +92,16 @@ namespace Svetomech.Utilities
             SetCursorPosition(middlePractical.Length, CursorTop - 2);
 
             SecureString passHolder = null;
-            string insecurePassHolder = null;
+            StringBuilder insecurePassHolder = null;
             if (password.GetType() == typeof(SecureString))
             {
                 passHolder = new SecureString();
             }
             else
             {
-                insecurePassHolder = String.Empty;
+                insecurePassHolder = new StringBuilder();
             }
-            bool useSecureHolder = (passHolder != null);
+            bool useSecureHolder = passHolder != null;
 
             int starsCount = 0;
             int middleDiff = middle.Length - middlePractical.Length;
@@ -110,8 +111,6 @@ namespace Svetomech.Utilities
             {
                 if (keyInfo.Key != ConsoleKey.Backspace)
                 {
-                    /*if (!((int)ki.Key >= 65 && (int)ki.Key <= 90))
-                      continue;*/ // <-- stricter, but disallows digits
                     if (char.IsControl(keyInfo.KeyChar))
                     {
                         continue;
@@ -132,9 +131,8 @@ namespace Svetomech.Utilities
                     }
                     else
                     {
-                        insecurePassHolder += keyInfo.KeyChar;
+                        insecurePassHolder.Append(keyInfo.KeyChar);
                     }
-
 
                     Write('*');
                 }
@@ -182,7 +180,9 @@ namespace Svetomech.Utilities
 
             Clear();
 
-            password = useSecureHolder ? (T)(object)passHolder : (T)(object)insecurePassHolder;
+            password = useSecureHolder ? (T)(object)passHolder : (T)(object)insecurePassHolder.ToString();
+
+            passHolder.Dispose();
         }
     }
 }
