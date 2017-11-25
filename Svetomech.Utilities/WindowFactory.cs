@@ -17,11 +17,6 @@ namespace Svetomech.Utilities
         }
         public static IWindow Create(IntPtr handle)
         {
-            if (handle == IntPtr.Zero)
-            {
-                throw new ZeroHandleException(nameof(handle));
-            }
-
             return new Window(handle);
         }
         /// <summary>
