@@ -1,4 +1,6 @@
 ﻿using Svetomech.Utilities.Types;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -6,21 +8,20 @@ namespace Svetomech.Utilities
 {
     public static class SimpleProcess
     {
-        public static Window[] GetVisibleWindows(string processName)
+        public static IEnumerable<IWindow> GetVisibleWindows(string processName)
         {
-            Process[] instances = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(processName));
-            Window[] windows = new Window[instances.Length];
+            string processNameSanitized = Path.GetFileNameWithoutExtension(processName);
+            Process[] processInstances = Process.GetProcessesByName(processNameSanitized);
+            var processWindowHandles = new List<IntPtr>();
 
-            for (int i = 0; i < windows.Length; ++i)
+            foreach(var instance in processInstances)
             {
-                windows[i] = new Window(instances[i].MainWindowHandle);
+                processWindowHandles.Add(instance.MainWindowHandle);
             }
 
-            return windows;
+            return WindowFactory.CreateMultiple(processWindowHandles);
         }
-
-
-        public static Window[] GetVisibleWindows(this Process proc)
+        public static IEnumerable<IWindow> GetVisibleWindows(this Process proc)
         {
             return GetVisibleWindows(proc.ProcessName);
         }

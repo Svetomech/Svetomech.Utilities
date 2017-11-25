@@ -1,22 +1,37 @@
 ﻿using Svetomech.Utilities.Types;
 using System;
+using System.Collections.Generic;
 
 namespace Svetomech.Utilities
 {
     public static class WindowFactory
     {
-        public static class Populate
+        public static IWindow Create(string handle)
         {
-            public static Window[] FromHandles(string[] handles)
+            if (String.IsNullOrWhiteSpace(handle))
             {
-                var windows = new Window[handles.Length];
+                throw new ArgumentException(nameof(handle));
+            }
 
-                for (int i = 0; i < windows.Length; ++i)
-                {
-                    windows[i] = new Window(new IntPtr(Convert.ToInt32(handles[i])));
-                }
+            return Create(new IntPtr(int.Parse(handle)));
+        }
+        public static IWindow Create(IntPtr handle)
+        {
+            if (handle == IntPtr.Zero)
+            {
+                throw new ZeroHandleException(nameof(handle));
+            }
 
-                return windows;
+            return new Window(handle);
+        }
+        /// <summary>
+        /// Use with accuracy. Only accepts string and IntPtr as T.
+        /// </summary>
+        public static IEnumerable<IWindow> CreateMultiple<T>(IEnumerable<T> handles)
+        {
+            foreach (var handle in handles)
+            {
+                yield return Create(handle.ToString());
             }
         }
     }
