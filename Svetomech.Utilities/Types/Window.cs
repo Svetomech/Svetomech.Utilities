@@ -19,7 +19,7 @@ namespace Svetomech.Utilities.Types
             Handle = handle;
         }
 
-        public override string ToString() => Title;
+        public override string ToString() => $"\"{Title}\" - {Handle}";
         public void Hide()
         {
             if (runningWindows)
