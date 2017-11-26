@@ -92,10 +92,12 @@ namespace Svetomech.Utilities.Types
             internal static bool SetPosition(Window window, int X, int Y)
             {
                 const int SWP_NOSIZE = 1;
-                const int SWP_NOZORDER = 4;
-                const int SWP_SHOWWINDOW = 64;
+                const int SWP_NOACTIVATE = 16;
+                IntPtr HWND_TOPMOST = (IntPtr)(-1);
+                IntPtr HWND_NOTOPMOST = (IntPtr)(-2);
 
-                return SetWindowPos(window.Handle, IntPtr.Zero, X, Y, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                SetWindowPos(window.Handle, HWND_TOPMOST, X, Y, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+                return SetWindowPos(window.Handle, HWND_NOTOPMOST, X, Y, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
             }
 
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
