@@ -34,7 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleApplication.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="PasswordStrength.cs" />
     <Compile Include="Types\IWindow.cs" />
     <Compile Include="Types\Point.cs" />
