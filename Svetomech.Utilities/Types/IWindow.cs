@@ -5,7 +5,7 @@ namespace Svetomech.Utilities.Types
     public interface IWindow
     {
         IntPtr Handle { get; set; }
-        bool IsShown { get; }
+        bool Visible { get; }
         string Title { get; }
 
         void Hide();

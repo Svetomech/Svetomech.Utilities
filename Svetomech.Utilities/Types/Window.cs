@@ -10,7 +10,7 @@ namespace Svetomech.Utilities.Types
         private readonly bool runningWindows = (RunningPlatform() == Platform.Windows);
 
         public string Title => runningWindows ? WindowsWindow.GetTitle(this) : LinuxWindow.GetTitle(this);
-        public bool IsShown => runningWindows ? WindowsWindow.IsShown(this) : LinuxWindow.IsShown(this);
+        public bool Visible => runningWindows ? WindowsWindow.Visible(this) : LinuxWindow.Visible(this);
         public IntPtr Handle { get; set; } = IntPtr.Zero;
 
         public Window() { }
@@ -73,7 +73,7 @@ namespace Svetomech.Utilities.Types
                     return caption;
                 }
             }
-            internal static bool IsShown(Window window)
+            internal static bool Visible(Window window)
             {
                 return IsWindowVisible(window.Handle);
             }
@@ -113,7 +113,7 @@ namespace Svetomech.Utilities.Types
         private class LinuxWindow
         {
             internal static string GetTitle(Window window) => null;
-            internal static bool IsShown(Window window) => true;
+            internal static bool Visible(Window window) => true;
             internal static bool Hide(Window window) => false;
             internal static bool Show(Window window) => false;
             internal static bool SetPosition(Window window, int X, int Y) => false;

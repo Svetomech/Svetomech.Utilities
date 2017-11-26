@@ -10,6 +10,11 @@ namespace Svetomech.Utilities
     {
         public static IEnumerable<IWindow> GetVisibleWindows(string processName)
         {
+            if (String.IsNullOrWhiteSpace(processName))
+            {
+                throw new ArgumentException(nameof(processName));
+            }
+
             string processNameSanitized = Path.GetFileNameWithoutExtension(processName);
             Process[] processInstances = Process.GetProcessesByName(processNameSanitized);
             var processWindowHandles = new List<IntPtr>();
@@ -21,9 +26,6 @@ namespace Svetomech.Utilities
 
             return WindowFactory.CreateMultiple(processWindowHandles);
         }
-        public static IEnumerable<IWindow> GetVisibleWindows(this Process proc)
-        {
-            return GetVisibleWindows(proc.ProcessName);
-        }
+        public static IEnumerable<IWindow> GetVisibleWindows(this Process proc) => GetVisibleWindows(proc.ProcessName);
     }
 }
