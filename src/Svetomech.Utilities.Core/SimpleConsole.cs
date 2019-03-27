@@ -1,18 +1,14 @@
 using Svetomech.Utilities.Types;
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using static System.Console;
-using static Svetomech.Utilities.SimplePlatform;
 
 namespace Svetomech.Utilities
 {
     public static partial class SimpleConsole
     {
-        private static readonly bool runningWindows = RunningPlatform() == Platform.Windows;
-
         public enum ConsoleType
         {
             CMD,
@@ -21,9 +17,6 @@ namespace Svetomech.Utilities
             None
         }
 
-        public static IWindow GetWindow() => runningWindows
-            ? WindowFactory.Create(WindowsConsole.GetWindow())
-            : WindowFactory.Create(LinuxConsole.GetWindow());
         public static string ExecuteCommand(string command, ConsoleType console)
         {
             ProcessStartInfo procStartInfo = null;
@@ -63,25 +56,28 @@ namespace Svetomech.Utilities
 
             return result;
         }
+
         /* HACK (to get the actual value, not an object): new NetworkCredential(String.Empty, PasswordPrompt("Enter a password: ")).Password;
              N.B.! It's really dirty, kills the purpose of using a SecureString and doesn't even work in Mono. Better use Insecure method. */
         public static SecureString PasswordPrompt(string hintMessage)
         {
             var pass = new SecureString();
 
-            PasswordPromptBasic(hintMessage, ref pass);
+            passwordPromptBasic(hintMessage, ref pass);
 
             return pass;
         }
+
         public static string InsecurePasswordPrompt(string hintMessage)
         {
             string pass = String.Empty;
 
-            PasswordPromptBasic(hintMessage, ref pass);
+            passwordPromptBasic(hintMessage, ref pass);
 
             return pass;
         }
-        private static void PasswordPromptBasic<T>(string hintMessage, ref T password)
+
+        private static void passwordPromptBasic<T>(string hintMessage, ref T password)
         {
             Clear();
             CursorVisible = true;
@@ -187,19 +183,6 @@ namespace Svetomech.Utilities
             password = useSecureHolder ? (T)(object)passHolder : (T)(object)insecurePassHolder.ToString();
 
             passHolder?.Dispose();
-        }
-
-        private static class WindowsConsole
-        {
-            internal static IntPtr GetWindow() => GetConsoleWindow();
-
-            [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            private static extern IntPtr GetConsoleWindow();
-        }
-        // TODO: Find the actual Linux APIs equivalent to Windows ones
-        private static class LinuxConsole
-        {
-            internal static IntPtr GetWindow() => IntPtr.Zero;
         }
     }
 }

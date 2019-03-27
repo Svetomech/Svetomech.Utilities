@@ -1,25 +1,56 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Svetomech.Utilities", "Svetomech.Utilities\Svetomech.Utilities.csproj", "{BD22946B-C1BE-4F95-A031-4FC8BFEC09A5}"
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BD201FA8-0F92-481B-9B61-46C92A58A9F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Svetomech.Utilities.Core", "src\Svetomech.Utilities.Core\Svetomech.Utilities.Core.csproj", "{B9E8DC9D-A241-4577-94BC-A0A578205707}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8F680FB7-6DD3-4D20-B33A-8C3D0E345E59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Svetomech.Utilities.Tests", "test\Svetomech.Utilities.Tests\Svetomech.Utilities.Tests.csproj", "{7991543C-7CD9-4610-A04A-4291E8B442C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BD22946B-C1BE-4F95-A031-4FC8BFEC09A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD22946B-C1BE-4F95-A031-4FC8BFEC09A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD22946B-C1BE-4F95-A031-4FC8BFEC09A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD22946B-C1BE-4F95-A031-4FC8BFEC09A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {98CA5FC9-125E-4466-BB7E-887879076D9D}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Debug|x64.Build.0 = Debug|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Debug|x86.Build.0 = Debug|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Release|x64.ActiveCfg = Release|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Release|x64.Build.0 = Release|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9E8DC9D-A241-4577-94BC-A0A578205707}.Release|x86.Build.0 = Release|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Debug|x64.Build.0 = Debug|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Debug|x86.Build.0 = Debug|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Release|x64.ActiveCfg = Release|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Release|x64.Build.0 = Release|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Release|x86.ActiveCfg = Release|Any CPU
+		{7991543C-7CD9-4610-A04A-4291E8B442C6}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9E8DC9D-A241-4577-94BC-A0A578205707} = {BD201FA8-0F92-481B-9B61-46C92A58A9F0}
+		{7991543C-7CD9-4610-A04A-4291E8B442C6} = {8F680FB7-6DD3-4D20-B33A-8C3D0E345E59}
 	EndGlobalSection
 EndGlobal
